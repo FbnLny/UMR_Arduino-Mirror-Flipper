@@ -16,7 +16,9 @@
 
 #define homingDir false
 
-#define stpsPerRev 1600
+#define stpsPerRev 2304
+//1600 steps for 90°
+//6400 for full revolution
 #define stpDelay 5
 
 #define eepromAddress 0
@@ -45,6 +47,8 @@ void setup() {
   digitalWrite(m2Pin, LOW);
 
   digitalWrite(11, HIGH);
+
+  setMicroStp();
 
   //Serial.begin(9600);
 
@@ -96,7 +100,7 @@ void driverWake() {
 void homingSeq() {
   //Serial.println("homing");
   digitalWrite(busyPin, HIGH);
-  setMicroStp();
+  //setMicroStp();
   delay(200);
   //attachInterrupt(digitalPinToInterrupt(homingPin), intHomeDetected, FALLING);
   
@@ -105,7 +109,7 @@ void homingSeq() {
     moveStp(homingDir);
     delay(stpDelay);
   }
-  setFullStp();
+  //setFullStp();
   driverSlp();
   driverWake();
   digitalWrite(busyPin, LOW);
@@ -115,13 +119,13 @@ void homingSeq() {
 void changePos() {
   //Serial.println("moving");
   digitalWrite(busyPin, HIGH);
-  setMicroStp();
+  //setMicroStp();
   delay(1);
   for (int i = 0; i < stpsPerRev; i++) {
     moveStp(!pos);
     delay(stpDelay);
   }
-  setFullStp();
+  //setFullStp();
   pos = !pos;
   digitalWrite(outPin, pos);
   driverSlp();
