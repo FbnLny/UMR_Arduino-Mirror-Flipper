@@ -133,6 +133,11 @@ void changePos() {
   EEPROM.write(eepromAddress, pos);
   delay(100);
   //Serial.println("clicking");
+  delay(60000);
+  Mouse.press();
+  delay(50);
+  Mouse.release();
+  delay(50000);
   Mouse.press();
   delay(50);
   Mouse.release();
